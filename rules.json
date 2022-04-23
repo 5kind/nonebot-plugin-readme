@@ -1,0 +1,16 @@
+[
+  [
+    "nonebot_plugin_status",
+    "nonebot_plugin_docs",
+    "nonebot_plugin_sentry",
+    "nonebot-plugin-ncm"
+  ],
+  [
+    "nonebot_plugin_mqtt",
+    "nonebot_plugin_navicat",
+    "nonebot_plugin_picsearcher"
+  ],
+  [
+    "nonebot_plugin_strman"
+  ]
+]
