@@ -35,28 +35,28 @@ python3 readme.py
 └── rules.json		       —— 将插件github网址转换为下载README使用的规则（详阅download.py） 
 ### 使用
 #### bot管理员
-@机器人 readme update	——更新plugin.json
-@机器人 readme upgrade	——更新readme文档
+@机器人 readme update	——更新plugin.json  
+@机器人 readme upgrade	——更新readme文档  
 #### 高级
 ##### 自定义机器人文档
-在readme文件夹中添加文件
-nonebot_plugin_readme
-└── readme
-修改readme，则指令`@机器人readme`将指向此readme，可自定义机器人文档
+在readme文件夹中添加文件  
+nonebot_plugin_readme  
+└── readme  
+修改readme，则指令`@机器人readme`将指向此readme，可自定义机器人文档  
 ##### 自定义下载文档
-*建议禁用readme update*
-修改plugin.json与rule.json,配置插件
+*建议禁用readme update*  
+修改plugin.json与rule.json,配置插件  
 ```
 "module_name": "plugin_name"
 "homepage": "https://github.com/name/plugin_name"
 ```
 
-并确保下载url指向正确的https://cdn.jsdelivr.net/gh/name/plugin_name/README.md
-可以下载github上的非商店插件文档
-rules.json用于配置github->cdn.jsdelivr.net规则，删除README.md，
-将插件名字写入rules.json中列表的最后一个，可以禁用插件文档更新
-（"nonebot_plugin_strman"为没有插件文档的插件，因此会返回空url）
-详阅源码
+并确保下载url指向正确的https://cdn.jsdelivr.net/gh/name/plugin_name/README.md  
+可以下载github上的非商店插件文档  
+rules.json用于配置github->cdn.jsdelivr.net规则，删除README.md，  
+将插件名字写入rules.json中列表的最后一个，可以禁用插件文档更新  
+（"nonebot_plugin_strman"为没有插件文档的插件，因此会返回空url）  
+详阅源码  
 #### 用户
 `@机器人readme [插件名称]`
 
