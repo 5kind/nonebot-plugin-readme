@@ -67,7 +67,7 @@ rules.json用于配置github->cdn.jsdelivr.net规则，删除README.md，
 ~~其实就是没有什么卵用~~  
 
 ### 代办
-长信息限制  （无法发送较长的文档）
+长信息限制  （无法发送较长的文档） 
 根据用户配置的readme_path,下载插件到机器人data文件夹  
 使用其他参数查看plugin.json附带的插件信息  
 ### bug反馈
