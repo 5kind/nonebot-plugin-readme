@@ -10,7 +10,7 @@
 ### 初始化（任选方法）
 1. 插件放入 src 文件夹，加载后
 ```
-readme upgrade
+@机器人readme upgrade
 ```
 
 2. 插件目录下
