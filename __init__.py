@@ -1,5 +1,3 @@
-import os
-
 from nonebot import on_command
 from nonebot.adapters import Message
 from nonebot.matcher import Matcher
@@ -9,7 +7,6 @@ from nonebot.adapters.onebot.v11 import (
     Bot,
     MessageEvent,
 )
-
 
 from .download import download_main, save_readme
 from .readme import readme_main, read_readme
@@ -47,18 +44,18 @@ async def readme_help(matcher: Matcher, args: Message = CommandArg()):
 async def handle_para(bot: Bot, event: MessageEvent, para_name: str = ArgPlainText("para")):
     if para_name not in ['update', 'upgrade']:
         readme_text = await read_readme(para_name)
-        try:
-            await readme.finish(readme_text)
-        except:
-            await readme.finish('查询插件readme过长，请联系机器人管理员')
+        # if len(readme_text) >= 3000:
+        #     await readme.send('请求插件文档过长！')
+        await readme.finish(readme_text)
     else:
         if str(event.user_id) in bot.config.superusers:
             if para_name == 'update':
-                save_readme()
+                await save_readme()
+                readme_text = '更新完成！请查看工作目录plugin.json！'
             else:
-                download_main()
+                await download_main()
                 readme_main()
-            readme_text = '更新完成！请查看工作目录plugin.json, 查看readme！'
+                readme_text = '更新完成！请查看readme！'
         else:
             readme_text = '插件 readme 的更新需要管理员权限！'
         await readme.finish(readme_text)

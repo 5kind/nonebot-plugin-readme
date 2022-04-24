@@ -3,7 +3,7 @@ import os
 import json
 
 
-from .download import readme_path
+from .download import current_path, readme_path
 
 
 def md2txt(md: str) -> str:
@@ -38,7 +38,8 @@ async def read_readme(name: str = 'nonebot_plugin_readme') -> str:
 
 
 def readme_main():
-    with open('plugins.json', encoding='utf-8') as f:
+    """运行get_readme"""
+    with open(os.path.join(current_path, 'plugins.json'), encoding='utf-8') as f:
         """读取 json """
         plugins_json = json.load(f)
     for plugins_dict in plugins_json:
@@ -49,7 +50,9 @@ def readme_main():
         except Exception as e:
             print(e)
 
+
 if __name__ == '__main__':
     current_path = os.path.dirname(__file__)
     readme_path = os.path.join(current_path, 'data', 'readme')
     readme_main()
+

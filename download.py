@@ -16,8 +16,8 @@ def get_page(module_name, url) -> str:
         1. md 替换为 markdown
         2. 无 README （或用户禁用了更新） 返回空字符串
     """
-    url = 'https://cdn.jsdelivr.net/gh/' + url.replace('https://github.com/', '')
-    with open('rules.json', encoding='utf-8') as f:
+    url = url.replace('https://github.com/', 'https://cdn.jsdelivr.net/gh/')
+    with open(os.path.join(current_path,'rules.json'), encoding='utf-8') as f:
         rules = json.load(f)
         if module_name in rules[0]:
             return url.replace('/tree', '').replace('/master', '') + '/README.md'
@@ -35,7 +35,6 @@ async def download_url(url, path):
     1. await 下载
     2. await 写入
     """
-
     async def fetch(url):
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
@@ -61,7 +60,7 @@ async def download_url(url, path):
             return str(url)+'下载失败\n错误代码'+str(e)
 
 
-def save_readme(download_dict=None):
+async def save_readme(download_dict=None):
     """解析并依据字典下载 json 或 readme"""
     tasks = []
     # return_info = ''
@@ -73,22 +72,14 @@ def save_readme(download_dict=None):
             """key 作为 readme 下载 path 或 plugins.json 下载参数, value 作为 下载 url"""
             path = os.path.join(readme_path, key, 'README.md')
             tasks.append(download_url(value, path))
-            # return_info = return_info +
-            # asyncio.create_task(download_url(value, path))
-            # print(await download_url(value, path))
-
-    # asyncio.create_task(*tasks)
-    readme_loop = asyncio.get_event_loop()
-    readme_loop.run_until_complete(asyncio.gather(*tasks))
-    # return return_info
+    await asyncio.gather(*tasks)
 
 
-def download_main():
-    while not os.path.isfile('plugins.json'):
+async def download_main():
+    while not os.path.isfile(os.path.join(current_path,'plugins.json')):
         """下载 plugins.json"""
-        # asyncio.create_task(save_readme())
-        save_readme()
-    with open('plugins.json', encoding='utf-8') as f:
+        await save_readme()
+    with open(os.path.join(current_path,'plugins.json'), encoding='utf-8') as f:
         """读取 json """
         plugins_json = json.load(f)
     readme_dict = {}
@@ -97,8 +88,7 @@ def download_main():
         module_name = plugins_dict['module_name']
         url = get_page(module_name, plugins_dict['homepage'])
         readme_dict[module_name] = url
-    # asyncio.create_task(save_readme(readme_dict))
-    save_readme(readme_dict)
+    await save_readme(readme_dict)
 
 
 if __name__ == '__main__':
@@ -107,9 +97,5 @@ if __name__ == '__main__':
     start = time.time()
     current_path = os.path.dirname(__file__)
     readme_path = os.path.join(current_path, 'data', 'readme')
-    # asyncio.gather(download_main())
-    # loop = asyncio.get_event_loop()
-    # print(loop.run_until_complete(asyncio.gather(download_main())))
-    download_main()
-    # asyncio.get_event_loop().run_until_complete(download_main())
+    asyncio.get_event_loop().run_until_complete(download_main())
     print('完成, 用时', time.time() - start)
