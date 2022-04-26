@@ -15,7 +15,7 @@ __help__plugin_name__ = "readme"
 __des__ = "获取 nonebot 插件 readme 文档"
 __cmd__ = f"""
 触发方式：readme + 插件名称 + 参数
-发送“readme”查看支持的指令
+发送“@机器人 readme”查看支持的指令
 """.strip()
 __short_cmd__ = 'readme {name} {command}'
 __example__ = """
